@@ -9,13 +9,14 @@ string Topic::getName(){
 }
 
 bool Topic::publish(void* data){
+
     return queue.add(data);
 }
 
-int Topic::getIndex(){
-    return queue.getCurrMinIndex();
-}
+// int Topic::getIndex(){
+//     return queue.getCurrMinIndex();
+// }
 
-void* Topic::getData(int index){
-    queue.getData(index);
+void* Topic::getData(string str){
+    queue.getData(str);
 }

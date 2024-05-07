@@ -14,3 +14,11 @@ For publishing a publisher lock can be used.
 For subscriber a subscriber lock for each subscriber group index can be used.
 
 
+
+
+
+
+
+
+
+g++ Lib/DoublyLinkedList/Source/Node.cpp Lib/DoublyLinkedList/Source/DoublyLinkedList.cpp Lib/Topic/Source/Topic.cpp Lib/SubscriberGroup/Source/SubscriberGroup.cpp Lib/Subscriber/Source/Subscriber.cpp Lib/InMemoryPubSub/Source/InMemoryPubSub.cpp     Test/test.cpp 

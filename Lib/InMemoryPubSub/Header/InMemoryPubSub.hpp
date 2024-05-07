@@ -3,7 +3,9 @@
 #include"./../../SubscriberGroup/Header/SubscriberGroup.hpp"
 #include"./../../Subscriber/Header/Subscriber.hpp"
 #include<map>
+#include<unordered_map>
 #include<set>
+#include<vector>
 
 class InMemoryPubSub{
 private:

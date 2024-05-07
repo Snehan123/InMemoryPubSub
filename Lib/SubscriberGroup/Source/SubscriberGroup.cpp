@@ -3,7 +3,7 @@
 SubscriberGroup::SubscriberGroup(string name, shared_ptr<Topic> ptr,int maxCount = 5) : sem(0){
     this->name = name;
     this->ptrToTopic = ptr;
-    index = ptrToTopic->getIndex();
+    index = 0;
 }
 
 string SubscriberGroup::getName(){
@@ -12,7 +12,7 @@ string SubscriberGroup::getName(){
 
 void* SubscriberGroup::getData(){
     sem.acquire();
-    return ptrToTopic->getData(index++);
+    return ptrToTopic->getData(name);
 }
 
 void SubscriberGroup::notify(){
