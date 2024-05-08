@@ -15,7 +15,7 @@ DoublyLinkedList::DoublyLinkedList(){
 }
 
 bool DoublyLinkedList::add(void* data){
-    std::lock_guard guardlock(pubMutex);
+    std::lock_guard<mutex> guardlock(pubMutex);
 
     std::shared_ptr<Node> newNode = std::make_shared<Node>();
     newNode->setIndex(index);

@@ -2,6 +2,7 @@
 #include<iostream>
 #include<unistd.h>
 #include<thread>
+#include"./../Lib/Semaphore/Header/Semaphore.hpp"
 using namespace std;
 
 InMemoryPubSub pubSub;
@@ -50,6 +51,8 @@ public:
 
 
 int main(){
+    // counting_semaphore<10> sem(0);
+    Semaphore sem;
 
     pubSub.addTopic("Movies");
     pubSub.addSubscriberGroup("Friends","Movies");;

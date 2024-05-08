@@ -11,6 +11,6 @@ public:
     string getName();
     // int getIndex();
     void* getData(string str);
-    int getIndex();
+    // int getIndex();
 
 };

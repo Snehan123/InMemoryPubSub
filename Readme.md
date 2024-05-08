@@ -22,3 +22,8 @@ For subscriber a subscriber lock for each subscriber group index can be used.
 
 
 g++ Lib/DoublyLinkedList/Source/Node.cpp Lib/DoublyLinkedList/Source/DoublyLinkedList.cpp Lib/Topic/Source/Topic.cpp Lib/SubscriberGroup/Source/SubscriberGroup.cpp Lib/Subscriber/Source/Subscriber.cpp Lib/InMemoryPubSub/Source/InMemoryPubSub.cpp     Test/test.cpp 
+
+
+
+
+/usr/bin/g++ Test/test.cpp Lib/InMemoryPubSub/Source/InMemoryPubSub.cpp Lib/SubscriberGroup/Source/SubscriberGroup.cpp Lib/Subscriber/Source/Subscriber.cpp Lib/Topic/Source/Topic.cpp Lib/DoublyLinkedList/Source/Node.cpp Lib/DoublyLinkedList/Source/DoublyLinkedList.cpp  Lib/Semaphore/Source/Semaphore.cpp

@@ -1,6 +1,6 @@
 #include"./../Header/SubscriberGroup.hpp"
 
-SubscriberGroup::SubscriberGroup(string name, shared_ptr<Topic> ptr,int maxCount = 5) : sem(0){
+SubscriberGroup::SubscriberGroup(string name, shared_ptr<Topic> ptr) {
     this->name = name;
     this->ptrToTopic = ptr;
     index = 0;

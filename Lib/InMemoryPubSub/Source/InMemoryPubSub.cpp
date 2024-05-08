@@ -12,7 +12,7 @@ bool InMemoryPubSub::addTopic(string topicName){
 
     shared_ptr<Topic> currTopic = make_shared<Topic>(topicName);
     topicList[topicName] = currTopic;
-    topicToSubscriberGroupMap[currTopic] = {};
+    // topicToSubscriberGroupMap[currTopic] = {};
     return 1;
 }
 
