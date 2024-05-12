@@ -6,6 +6,7 @@
 #include<unordered_map>
 #include<set>
 #include<vector>
+#include<memory>
 
 class InMemoryPubSub{
 private:

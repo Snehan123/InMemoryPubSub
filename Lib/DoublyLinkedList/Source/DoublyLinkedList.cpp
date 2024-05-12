@@ -1,11 +1,20 @@
 #include"./../Header/DoublyLinkedList.hpp"
+#include"./../../globals.h"
 
 DoublyLinkedList::DoublyLinkedList(){
+
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Making a DoublyLinkedListQueue.\n"<<endl;
+    }
     size = 0;
     index = 0;
 
     head = std::make_shared<Node>();
     tail = std::make_shared<Node>();
+
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Made Head and Tail Node.\n"<<endl;
+    }
 
     head->setNext(tail);
     head->setPrev(nullptr);
@@ -16,6 +25,9 @@ DoublyLinkedList::DoublyLinkedList(){
 
 bool DoublyLinkedList::add(void* data){
     std::lock_guard<mutex> guardlock(pubMutex);
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the lock of the queue.\n"<<endl;
+    }
 
     std::shared_ptr<Node> newNode = std::make_shared<Node>();
     newNode->setIndex(index);
@@ -32,6 +44,10 @@ bool DoublyLinkedList::add(void* data){
     size+=1;
     indexToPtrMap[index] = newNode;
     index+=1;
+
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Added data. size="<<size<<" index="<<index<<"\n"<<endl;
+    }
 
 }
 

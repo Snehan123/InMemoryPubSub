@@ -1,8 +1,11 @@
 #include"./../Header/Node.hpp"
-
+#include"./../../globals.h"
+using namespace std;
 Node::Node(){
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Making a node\n"<<endl;
+    }
     data = std::make_shared<void*>();
-    prev = next = std::make_shared<Node>();
 }
 
 void Node::setData(std::shared_ptr<void*> data){

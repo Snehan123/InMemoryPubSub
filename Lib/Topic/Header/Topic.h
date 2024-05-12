@@ -1,5 +1,6 @@
 #pragma once
 #include"./../../DoublyLinkedList/Header/DoublyLinkedList.hpp"
+#include<memory>
 // #include"./../../SubscriberGroup/Header/SubscriberGroup.hpp"
 class Topic{
 private:
