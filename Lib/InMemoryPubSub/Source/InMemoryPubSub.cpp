@@ -36,20 +36,40 @@ bool InMemoryPubSub::addSubscriberGroup(string subscriberGroupName, string topic
     if(subscriberGroupList.count(subscriberGroupName)>0){
         return 0;
     }
-    if(topicList.count(topicName)>0){
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"SubscriberGroup is NotAlready there.\n"<<endl;
+    }
+    if(topicList.count(topicName)==0){
         return 0;
     }
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"We have topicName.\n"<<endl;
+    }
     auto topicPtr = topicList[topicName];
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the topic ptr.\n"<<endl;
+    }
     shared_ptr<SubscriberGroup> currSubGroup  = make_shared<SubscriberGroup>(subscriberGroupName,topicPtr);
     topicToSubscriberGroupMap[topicPtr].push_back(currSubGroup);
+    subscriberGroupList[subscriberGroupName] = currSubGroup;
 }
 
 shared_ptr<Subscriber> InMemoryPubSub::addSubscriber(string subscriber, string subscriberGroupName){
-    if(subscriberGroupList.count(subscriberGroupName)>0){
+
+    if(subscriberGroupList.count(subscriberGroupName)==0){
         return 0;
     }
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"InMemoryPubSub adding new subscriber\n"<<endl;
+    }
     auto subGrpPtr = subscriberGroupList[subscriberGroupName];
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the subscriberGroup PtR\n"<<endl;
+    }
     shared_ptr<Subscriber> currSub = make_shared<Subscriber>(subGrpPtr,subscriber);
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Created a new subscriber.\n"<<endl;
+    }
     subscriberGroupToSubscriberMap[subGrpPtr].push_back(currSub);
     return currSub;
 }
@@ -68,7 +88,11 @@ bool InMemoryPubSub::publish(string topicName, void* data){
         cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got The topic Ptr. Publishing data.\n"<<endl;
     }
 
-    if(currTopic->publish(data)==0)return 0;
+    if(currTopic->publish(data)!=0)return 0;
+
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Iterating Subscriber Group\n"<<endl;
+    }
 
     for(auto subGrp: topicToSubscriberGroupMap[currTopic]){
         if(debug){

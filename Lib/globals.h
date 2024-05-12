@@ -1,2 +1,2 @@
 #pragma once
-static int debug = true;
+static int debug = false;

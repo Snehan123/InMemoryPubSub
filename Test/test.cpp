@@ -45,15 +45,25 @@ public:
     Subs(string name, int time){
         this->name  = name;
         this->time = time;
-        ptr = pubSub.addSubscriber("Friends",name);
+        if(debug){
+            cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Created a subscriber. Adding it to the subscriber group \n"<<endl;
+        }
+        ptr = pubSub.addSubscriber(name,"Friends");
+        if(debug){
+            cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the ptr to subscriber in the subsriber.\n"<<endl;
+        }   
     }
 
     void operator()(){
 
+        if(debug){
+            cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Starting loop for subscriber\n"<<endl;
+        }
+
         while(true){
             void* a = ptr->getData();
             int b = *(int*)a;
-            cout<<b<<" "<<name<<endl;;
+            cout<<b<<" Got Data <<<><><><<><><>"<<name<<endl;;
             sleep(time);
         }
     }
@@ -84,10 +94,10 @@ int main(){
 
     // t1.detach();
 
-    // Subs s1("Snehan",1), s2("Mohan",1), s3("Rohan",1);
+    Subs s1("Snehan",1), s2("Mohan",1);// s3("Rohan",1);
 
-    // std::thread t2(s1);
-    // std::thread t3(s2);
+    std::thread t2(s1);
+    std::thread t3(s2);
     // std::thread t4(s3);
 
 
