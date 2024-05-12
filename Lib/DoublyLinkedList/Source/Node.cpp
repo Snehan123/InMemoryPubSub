@@ -9,6 +9,9 @@ Node::Node(){
 }
 
 void Node::setData(std::shared_ptr<void*> data){
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Setting Data To Node "<<*(int*)*data<<"\n"<<endl;
+    }
     this->data = data;
 }
 

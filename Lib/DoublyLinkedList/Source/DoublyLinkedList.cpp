@@ -7,7 +7,7 @@ DoublyLinkedList::DoublyLinkedList(){
         cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Making a DoublyLinkedListQueue.\n"<<endl;
     }
     size = 0;
-    index = 0;
+    index = 1;
 
     head = std::make_shared<Node>();
     tail = std::make_shared<Node>();
@@ -30,9 +30,11 @@ bool DoublyLinkedList::add(void* data){
     }
 
     std::shared_ptr<Node> newNode = std::make_shared<Node>();
-    newNode->setIndex(index);
-    std::shared_ptr<void*> dataPtr = std::make_shared<void*>();
+    std::shared_ptr<void*> dataPtr = std::make_shared<void*>(data);
     newNode->setData(dataPtr);
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Added data to Node.\n"<<endl;
+    }
 
     auto prev = tail->getPrev();
     auto next = tail;
@@ -42,7 +44,13 @@ bool DoublyLinkedList::add(void* data){
     tail->setPrev(newNode);
 
     size+=1;
+    newNode->setIndex(index);
     indexToPtrMap[index] = newNode;
+    // for(auto a: indexToPtrMap){
+    //     shared_ptr<Node> ptr = a.second;
+    //     shared_ptr<void*> ptr2 = ptr->getData();
+    //     cout<<a.first<<" "<<ptr<<" "<<ptr2<<" "<<*(int*)(*ptr2)<<endl;
+    // }
     index+=1;
 
     if(debug){
@@ -51,32 +59,44 @@ bool DoublyLinkedList::add(void* data){
 
 }
 
-void* DoublyLinkedList::getData(std::string str){
-    if(groupToIndex.count(str)==0){
+void* DoublyLinkedList::getData(const int idx){
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Getting Data from Queue\n"<<endl;
+    }
+    if(indexToPtrMap.count(idx)==0){
+
+        if(debug){
+            cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"No Ptr Found\n"<<endl;
+        }
         return nullptr;
-    }else{
-        int index = groupToIndex[str];
-        auto d = *(indexToPtrMap[index]->getData());
-        groupToIndex[str]+=1;
+    } 
+    {
+        void* d = *(indexToPtrMap[idx]->getData());
 
-
-
-        int miniIndex = 10000000;
-        for(auto itr: groupToIndex){
-            int a = itr.second;
-            miniIndex = std::min(miniIndex,a);
+        if(debug){
+            cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the data "<<*(int*)d<<"\n"<<endl;
         }
-        auto tmp = head->getNext();
-        auto prev = head;
-        while(tmp!=tail){
-            if(miniIndex > tmp->getIndex()){
-                prev->setNext(tmp->getNext());
-                tmp->setPrev(prev);
-            }
-            prev = tmp;
-            tmp = tmp->getNext();
-        }
+
+        
         return d;
+    }
+}
+
+void DoublyLinkedList::clearTrailingNodes(){
+    int miniIndex = 10000000;
+    for(auto itr: indexToPtrMap){
+        int a = itr.first;
+        miniIndex = std::min(miniIndex,a);
+    }
+    auto tmp = head->getNext();
+    auto prev = head;
+    while(tmp!=tail){
+        if(miniIndex > tmp->getIndex()){
+            prev->setNext(tmp->getNext());
+            tmp->setPrev(prev);
+        }
+        prev = tmp;
+        tmp = tmp->getNext();
     }
 }
 

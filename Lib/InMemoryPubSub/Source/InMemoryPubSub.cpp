@@ -51,6 +51,7 @@ bool InMemoryPubSub::addSubscriberGroup(string subscriberGroupName, string topic
     }
     shared_ptr<SubscriberGroup> currSubGroup  = make_shared<SubscriberGroup>(subscriberGroupName,topicPtr);
     topicToSubscriberGroupMap[topicPtr].push_back(currSubGroup);
+    topicPtr->registerSubscriberGroup(subscriberGroupName);
     subscriberGroupList[subscriberGroupName] = currSubGroup;
 }
 
@@ -79,7 +80,7 @@ bool InMemoryPubSub::publish(string topicName, void* data){
         return 0;
     }
     if(debug){
-        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Publishing to matching topic\n"<<endl;
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Publishing to matching topic with data "<<*(int*)data<<"\n"<<endl;
     }
     
     shared_ptr<Topic> currTopic = topicList[topicName];

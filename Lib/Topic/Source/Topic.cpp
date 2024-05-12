@@ -23,5 +23,12 @@ bool Topic::publish(void* data){
 // }
 
 void* Topic::getData(string str){
-    queue.getData(str);
+    // cout<<"index="<<subscriberGroupToIndex[str]<<endl;
+    void* tmp = queue.getData(subscriberGroupToIndex[str]);
+    subscriberGroupToIndex[str]+=1;
+    return tmp;
+}
+
+void Topic::registerSubscriberGroup(string name){
+    subscriberGroupToIndex[name] = queue.getCurrMinIndex();
 }

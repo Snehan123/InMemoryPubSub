@@ -10,12 +10,13 @@ private:
     int size; 
     map<int,shared_ptr<Node> > indexToPtrMap;
     std::mutex pubMutex;
-    map<string,int> groupToIndex;
     int index;
+
+    void clearTrailingNodes();
 public:
     DoublyLinkedList();
     bool add(void* data);
-    void* getData(std::string str);
+    void* getData(int idx);
     bool pop();
     int getCurrMinIndex();
 };

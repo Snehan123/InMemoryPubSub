@@ -24,13 +24,16 @@ public:
         if(debug){
             cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Starting Publisher Loop\n"<<endl;
         }
+
+        vector<int> v;
         int num;
         while(true){
             cin>>num;
+            v.push_back(num);
             if(debug){
                 cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Publisher publishing "<<num<<"\n"<<endl;
             }
-            pubSub.publish("Movies",(void*)&num);
+            pubSub.publish("Movies",(void*)&v[v.size()-1]);
         }
     }
 
@@ -41,14 +44,16 @@ private:
     shared_ptr<Subscriber> ptr;
     string name;
     int time;
+    string subsGroup;
 public:
-    Subs(string name, int time){
+    Subs(string name,string subsGroup, int time){
         this->name  = name;
         this->time = time;
+        this->subsGroup = subsGroup;
         if(debug){
             cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Created a subscriber. Adding it to the subscriber group \n"<<endl;
         }
-        ptr = pubSub.addSubscriber(name,"Friends");
+        ptr = pubSub.addSubscriber(name,subsGroup);
         if(debug){
             cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Got the ptr to subscriber in the subsriber.\n"<<endl;
         }   
@@ -63,7 +68,7 @@ public:
         while(true){
             void* a = ptr->getData();
             int b = *(int*)a;
-            cout<<b<<" Got Data <<<><><><<><><>"<<name<<endl;;
+            cout<<" Name:"<<name<<" Data:"<<b<<endl;;
             sleep(time);
         }
     }
@@ -89,16 +94,26 @@ int main(){
     if(debug){
         cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Added Subscriber Group\n"<<endl;
     }
+    pubSub.addSubscriberGroup("Friends&Friends","Movies");;
+    if(debug){
+        cout<<"["<<__FUNCTION__<<" "<<__LINE__<<"] "<<"Added Subscriber Group\n"<<endl;
+    }
+
     Publisher pub(1); 
     std::thread t1(pub);
 
     // t1.detach();
 
-    Subs s1("Snehan",1), s2("Mohan",1);// s3("Rohan",1);
+    Subs s1("Snehan","Friends",5), s2("Mohan","Friends",10), s3("Rohan","Friends",15);
+    Subs s4("Snehan2","Friends&Friends",5), s5("Mohan2","Friends&Friends",10), s6("Rohan2","Friends&Friends",15);
 
     std::thread t2(s1);
     std::thread t3(s2);
-    // std::thread t4(s3);
+    std::thread t4(s3);
+
+    std::thread t5(s4);
+    std::thread t6(s5);
+    std::thread t7(s6);
 
 
     // t2.join();
